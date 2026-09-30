@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Учебная карточка риска: задымление. Признаки, действия до/во время/после, когда обращаться в службу, первичные источники.">
+    <title>Карточка риска: Задымление — памятка действий</title>
+
+    <style>
+        :root {
+            --bg: #f7f7f5;
+            --card: #ffffff;
+            --text: #1a1a1a;
+            --muted: #555;
+            --accent: #b3261e;
+            --accent-soft: #fdecea;
+            --ok: #1b5e20;
+            --ok-soft: #e8f5e9;
+            --border: #d9d9d6;
+            --focus: #0b57d0;
+            --radius: 10px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.55;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .page-head {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 1rem 1.25rem;
+        }
+
+        .page-head h1,
+        .subtitle {
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: clamp(1.4rem, 4vw, 1.9rem);
+            margin: 0 0 .4rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin: 0;
+            font-size: .95rem;
+        }
+
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 1.25rem 1rem 3rem;
+        }
+
+        section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.1rem 1.1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            margin: 0 0 .6rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+            margin: 1rem 0 .4rem;
+        }
+
+        p, li { font-size: .97rem; }
+
+        ul, ol { padding-left: 1.2rem; }
+
+        li { margin-bottom: .35rem; }
+
+        .callout {
+            background: var(--accent-soft);
+            border-left: 4px solid var(--accent);
+            padding: .7rem .9rem;
+            border-radius: 6px;
+            margin: .7rem 0 0;
+        }
+
+        .callout.ok {
+            background: var(--ok-soft);
+            border-left-color: var(--ok);
+        }
+
+        /* Фильтр по этапу */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin-bottom: .9rem;
+        }
+
+        .filter-bar button {
+            font: inherit;
+            font-size: .9rem;
+            padding: .4rem .8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .filter-bar button[aria-pressed="true"] {
+            background: var(--text);
+            color: #fff;
+            border-color: var(--text);
+        }
+
+        /* Чек-лист */
+        .checklist { list-style: none; padding: 0; margin: 0; }
+
+        .checklist li {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: .6rem .7rem;
+            margin-bottom: .5rem;
+            display: flex;
+            gap: .6rem;
+            align-items: flex-start;
+            background: #fff;
+        }
+
+        .checklist li[hidden] { display: none; }
+
+        .checklist input[type="checkbox"] {
+            width: 1.15rem;
+            height: 1.15rem;
+            margin-top: .18rem;
+            flex: 0 0 auto;
+            accent-color: var(--ok);
+        }
+
+        .checklist label { cursor: pointer; flex: 1; }
+
+        .checklist input:checked + label {
+            text-decoration: line-through;
+            color: var(--muted);
+        }
+
+        .stage-badge {
+            display: inline-block;
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            padding: .1rem .45rem;
+            border-radius: 4px;
+            margin-right: .4rem;
+            background: #eee;
+            color: #444;
+            vertical-align: .08em;
+        }
+
+        .stage-badge[data-stage="before"] { background: #e3f2fd; color: #0d47a1; }
+        .stage-badge[data-stage="during"] { background: #fdecea; color: #b3261e; }
+        .stage-badge[data-stage="after"]  { background: #e8f5e9; color: #1b5e20; }
+
+        .progress-line {
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            margin-bottom: .8rem;
+            font-size: .9rem;
+            color: var(--muted);
+            flex-wrap: wrap;
+        }
+
+        progress {
+            flex: 1 1 120px;
+            height: .7rem;
+            accent-color: var(--ok);
+        }
+
+        .reset-btn {
+            font: inherit;
+            font-size: .85rem;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: .25rem .6rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* Источники */
+        .sources { list-style: none; padding: 0; margin: 0; }
+
+        .sources li {
+            border-bottom: 1px dashed var(--border);
+            padding: .55rem 0;
+            font-size: .92rem;
+        }
+
+        .sources li:last-child { border-bottom: none; }
+
+        .sources a { color: var(--focus); }
+
+        .checked-date { color: var(--muted); font-size: .85rem; }
+
+        /* Видимый фокус для клавиатуры */
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        label:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .page-foot {
+            font-size: .82rem;
+            color: var(--muted);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            section { padding: .9rem; }
+            .filter-bar button { font-size: .85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-head">
+        <h1>Карточка риска: Задымление</h1>
+        <p class="subtitle">
+            Учебный материал для жильцов и работников. Порядок действий сверяйте
+            с официальными инструкциями и региональными службами.
+        </p>
+    </header>
+
+    <main>
+        <section id="risk-description" aria-labelledby="h-description">
+            <h2 id="h-description">Описание риска и для кого он важен</h2>
+            <p>
+                Задымление — присутствие дыма в воздухе. Оно снижает видимость,
+                затрудняет дыхание и может привести к отравлению продуктами горения
+                (в первую очередь угарным газом). Риск особенно существенен для людей
+                вблизи очага возгорания, для жильцов многоквартирных домов, а также
+                для работников производств с горючими материалами.
+            </p>
+        </section>
+
+        <section id="risk-factors" aria-labelledby="h-factors">
+            <h2 id="h-factors">Признаки и условия возникновения</h2>
+            <p>Это наблюдаемые признаки, а не диагноз. Они должны насторожить:</p>
+            <ul>
+                <li>запах гари или жжёной изоляции;</li>
+                <li>видимый дым в воздухе, из окон, дверей, вентиляции;</li>
+                <li>срабатывание пожарной сигнализации;</li>
+                <li>повышение температуры в помещении;</li>
+                <li>потемнение стен у розеток, оплавление проводов.</li>
+            </ul>
+            <p>Условия, повышающие риск:</p>
+            <ul>
+                <li>несоблюдение правил пожарной безопасности;</li>
+                <li>неисправная электропроводка или оборудование;</li>
+                <li>хранение легковоспламеняющихся материалов рядом с источниками тепла;</li>
+                <li>природные пожары (лесные, торфяные) вблизи населённого пункта.</li>
+            </ul>
+        </section>
+
+        <section id="actions" aria-labelledby="h-actions">
+            <h2 id="h-actions">Действия: до, во время, после</h2>
+            <p>
+                Отметьте пункты, которые вы уже знаете или выполнили. Прогресс
+                сохраняется только в вашем браузере, персональные данные не записываются.
+            </p>
+
+            <div class="filter-bar" role="group" aria-label="Фильтр по этапу события">
+                <button type="button" data-filter="all" aria-pressed="true">Все этапы</button>
+                <button type="button" data-filter="before" aria-pressed="false">До</button>
+                <button type="button" data-filter="during" aria-pressed="false">Во время</button>
+                <button type="button" data-filter="after" aria-pressed="false">После</button>
+            </div>
+
+            <div class="progress-line">
+                <span id="progress-text" aria-live="polite">Выполнено: 0 из 0</span>
+                <progress id="progress-bar" value="0" max="1" aria-hidden="true"></progress>
+                <button type="button" class="reset-btn" id="reset-btn">Сбросить</button>
+            </div>
+
+            <ul class="checklist" id="checklist">
+                <li data-stage="before">
+                    <input type="checkbox" id="b1">
+                    <label for="b1"><span class="stage-badge" data-stage="before">До</span>Изучить план эвакуации и пути выхода.</label>
+                </li>
+                <li data-stage="before">
+                    <input type="checkbox" id="b2">
+                    <label for="b2"><span class="stage-badge" data-stage="before">До</span>Проверить работоспособность пожарной сигнализации.</label>
+                </li>
+                <li data-stage="before">
+                    <input type="checkbox" id="b3">
+                    <label for="b3"><span class="stage-badge" data-stage="before">До</span>Убедиться в наличии и исправности огнетушителя.</label>
+                </li>
+                <li data-stage="before">
+                    <input type="checkbox" id="b4">
+                    <label for="b4"><span class="stage-badge" data-stage="before">До</span>Не хранить легковоспламеняющиеся материалы у источников тепла.</label>
+                </li>
+
+                <li data-stage="during">
+                    <input type="checkbox" id="d1">
+                    <label for="d1"><span class="stage-badge" data-stage="during">Во время</span>Сохранять спокойствие и не создавать панику.</label>
+                </li>
+                <li data-stage="during">
+                    <input type="checkbox" id="d2">
+                    <label for="d2"><span class="stage-badge" data-stage="during">Во время</span>Дышать через влажную ткань, двигаться пригнувшись или ползком.</label>
+                </li>
+                <li data-stage="during">
+                    <input type="checkbox" id="d3">
+                    <label for="d3"><span class="stage-badge" data-stage="during">Во время</span>Не пользоваться лифтом, спускаться по лестнице.</label>
+                </li>
+                <li data-stage="during">
+                    <input type="checkbox" id="d4">
+                    <label for="d4"><span class="stage-badge" data-stage="during">Во время</span>Если эвакуация невозможна — закрыть двери, заткнуть щели влажной тканью, сигнализировать из окна.</label>
+                </li>
+
+                <li data-stage="after">
+                    <input type="checkbox" id="a1">
+                    <label for="a1"><span class="stage-badge" data-stage="after">После</span>Следовать указаниям спасательных служб.</label>
+                </li>
+                <li data-stage="after">
+                    <input type="checkbox" id="a2">
+                    <label for="a2"><span class="stage-badge" data-stage="after">После</span>Не возвращаться в помещение до официального разрешения.</label>
+                </li>
+                <li data-stage="after">
+                    <input type="checkbox" id="a3">
+                    <label for="a3"><span class="stage-badge" data-stage="after">После</span>Обратиться за медицинской помощью при симптомах отравления.</label>
+                </li>
+            </ul>
+        </section>
+
+        <section id="official-help" aria-labelledby="h-help">
+            <h2 id="h-help">Когда обращаться в официальную службу</h2>
+            <p>
+                Немедленно звоните в экстренные службы при обнаружении дыма, огня,
+                запаха гари или срабатывании сигнализации:
+            </p>
+            <ul>
+                <li>пожарная охрана — <strong>101</strong> (с мобильного);</li>
+                <li>единый номер экстренных служб — <strong>112</strong>.</li>
+            </ul>
+            <p class="callout">
+                Номера приведены как справочные для учебного материала. Перед
+                использованием сверьте их с официальным сайтом МЧС России или
+                региональной службой.
+            </p>
+        </section>
+
+        <section id="sources" aria-labelledby="h-sources">
+            <h2 id="h-sources">Первичные источники</h2>
+            <ul class="sources">
+                <li>
+                    МЧС России. Официальный портал — раздел профилактики и нормативных документов.
+                    <a href="https://www.mchs.gov.ru/dejatelnost/prevention/normativnye-dokumenty"
+                       target="_blank" rel="noopener noreferrer">mchs.gov.ru</a>
+                    — <span class="checked-date">дата проверки: 16.09.2026</span>
+                </li>
+                <li>
+                    Постановление Правительства РФ № 1479 «Об утверждении Правил противопожарного режима в Российской Федерации».
+                    <a href="http://publication.pravo.gov.ru/Document/View/0001202009140033"
+                       target="_blank" rel="noopener noreferrer">publication.pravo.gov.ru</a>
+                    — <span class="checked-date">дата проверки: 16.09.2026</span>
+                </li>
+                <li>
+                    ВОЗ (WHO). Материалы по качеству воздуха и продуктам горения.
+                    <a href="https://www.who.int/teams/environment-climate-change-and-health/air-quality-and-health"
+                       target="_blank" rel="noopener noreferrer">who.int</a>
+                    — <span class="checked-date">дата проверки: 16.09.2026</span>
+                </li>
+            </ul>
+        </section>
+
+        <section id="learning-data" aria-labelledby="h-edu">
+            <h2 id="h-edu">Какие данные являются учебными</h2>
+            <ul>
+                <li>Формулировки действий и чек-лист — учебные, не заменяют официальную инструкцию.</li>
+                <li>Номера 101 и 112 приведены как справочные — сверьте с региональной службой.</li>
+                <li>Даты проверки источников указаны на момент подготовки материала.</li>
+            </ul>
+            <p class="callout ok">
+                Расчётных значений (концентраций, доз, порогов) на странице нет —
+                материал носит описательный характер.
+            </p>
+        </section>
+    </main>
+
+    <footer class="page-foot">
+        <p>© 2026 Учебный проект. Страница не является официальной инструкцией.</p>
+    </footer>
+
+    <script>
+        (function () {
+            "use strict";
+
+            var STORAGE_KEY = "smoke-risk-checklist-v1";
+
+            var list = document.getElementById("checklist");
+            var checkboxes = Array.prototype.slice.call(
+                list.querySelectorAll('input[type="checkbox"]')
+            );
+            var filterButtons = Array.prototype.slice.call(
+                document.querySelectorAll(".filter-bar button")
+            );
+            var progressText = document.getElementById("progress-text");
+            var progressBar = document.getElementById("progress-bar");
+            var resetBtn = document.getElementById("reset-btn");
+
+            if (!list || checkboxes.length === 0) {
+                return; // граничный случай: разметка отсутствует
+            }
+
+            function loadState() {
+                try {
+                    var raw = window.localStorage.getItem(STORAGE_KEY);
+                    if (!raw) return {};
+                    var parsed = JSON.parse(raw);
+                    return (parsed && typeof parsed === "object") ? parsed : {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function saveState() {
+                var state = {};
+                checkboxes.forEach(function (cb) { state[cb.id] = cb.checked; });
+                try {
+                    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                } catch (e) {
+                    /* хранилище недоступно — игнорируем */
+                }
+            }
+
+            function updateProgress() {
+                var visible = checkboxes.filter(function (cb) {
+                    var item = cb.closest("li");
+                    return item && !item.hidden;
+                });
+                var done = visible.filter(function (cb) { return cb.checked; }).length;
+                var total = visible.length;
+                progressText.textContent = "Выполнено: " + done + " из " + total;
+                progressBar.max = total || 1;
+                progressBar.value = done;
+            }
+
+            function applyFilter(stage) {
+                list.querySelectorAll("li").forEach(function (item) {
+                    var show = (stage === "all") || (item.dataset.stage === stage);
+                    item.hidden = !show;
+                });
+                filterButtons.forEach(function (btn) {
+                    var pressed = btn.dataset.filter === stage;
+                    btn.setAttribute("aria-pressed", pressed ? "true" : "false");
+                });
+                updateProgress();
+            }
+
+            // Восстановление состояния
+            var saved = loadState();
+            checkboxes.forEach(function (cb) {
+                if (Object.prototype.hasOwnProperty.call(saved, cb.id)) {
+                    cb.checked = Boolean(saved[cb.id]);
+                }
+            });
+
+            checkboxes.forEach(function (cb) {
+                cb.addEventListener("change", function () {
+                    saveState();
+                    updateProgress();
+                });
+            });
+
+            filterButtons.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    applyFilter(btn.dataset.filter);
+                });
+            });
+
+            if (resetBtn) {
+                resetBtn.addEventListener("click", function () {
+                    checkboxes.forEach(function (cb) { cb.checked = false; });
+                    saveState();
+                    updateProgress();
+                });
+            }
+
+            applyFilter("all");
+        })();
+    </script>
+
+</body>
+</html>

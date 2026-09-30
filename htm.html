@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Утечка бытового газа — карточка риска и памятка действий</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --muted: #555;
+      --accent: #b3261e;
+      --accent-soft: #fdecea;
+      --ok: #1b5e20;
+      --ok-soft: #e8f5e9;
+      --border: #d9d9d6;
+      --focus: #0b57d0;
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    header.page-head {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1rem 1.25rem;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      margin: 0 0 .4rem;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      font-size: .95rem;
+    }
+
+    main { padding: 1.25rem 0 3rem; }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      margin: 0 0 .6rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin: 1rem 0 .4rem;
+    }
+
+    p, li { font-size: .97rem; }
+
+    ul, ol { padding-left: 1.2rem; }
+
+    li { margin-bottom: .35rem; }
+
+    .tag {
+      display: inline-block;
+      font-size: .78rem;
+      padding: .12rem .5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      color: var(--muted);
+      margin-right: .35rem;
+    }
+
+    .tag.edu { background: #fff8e1; border-color: #f0d68a; color: #6b5200; }
+
+    .callout {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: .7rem .9rem;
+      border-radius: 6px;
+      margin: .7rem 0 0;
+    }
+
+    .callout.ok {
+      background: var(--ok-soft);
+      border-left-color: var(--ok);
+    }
+
+    /* Фильтр по этапу */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-bottom: .9rem;
+    }
+
+    .filter-bar button {
+      font: inherit;
+      font-size: .9rem;
+      padding: .4rem .8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .filter-bar button[aria-pressed="true"] {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    /* Чек-лист */
+    .checklist { list-style: none; padding: 0; margin: 0; }
+
+    .checklist li {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .6rem .7rem;
+      margin-bottom: .5rem;
+      display: flex;
+      gap: .6rem;
+      align-items: flex-start;
+      background: #fff;
+    }
+
+    .checklist li[hidden] { display: none; }
+
+    .checklist input[type="checkbox"] {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: .18rem;
+      flex: 0 0 auto;
+      accent-color: var(--ok);
+    }
+
+    .checklist label { cursor: pointer; flex: 1; }
+
+    .checklist input:checked + label {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .stage-badge {
+      display: inline-block;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      padding: .1rem .45rem;
+      border-radius: 4px;
+      margin-right: .4rem;
+      background: #eee;
+      color: #444;
+      vertical-align: .08em;
+    }
+
+    .stage-badge[data-stage="before"] { background: #e3f2fd; color: #0d47a1; }
+    .stage-badge[data-stage="during"] { background: #fdecea; color: #b3261e; }
+    .stage-badge[data-stage="after"]  { background: #e8f5e9; color: #1b5e20; }
+
+    .progress-line {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin-bottom: .8rem;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+
+    progress {
+      flex: 1;
+      height: .7rem;
+      accent-color: var(--ok);
+    }
+
+    .reset-btn {
+      font: inherit;
+      font-size: .85rem;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .25rem .6rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* Источники */
+    .sources { list-style: none; padding: 0; margin: 0; }
+
+    .sources li {
+      border-bottom: 1px dashed var(--border);
+      padding: .55rem 0;
+      font-size: .92rem;
+    }
+
+    .sources li:last-child { border-bottom: none; }
+
+    .sources a { color: var(--focus); }
+
+    .checked-date { color: var(--muted); font-size: .85rem; }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    label:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    footer.page-foot {
+      font-size: .82rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      section { padding: .9rem; }
+      .filter-bar button { font-size: .85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Утечка бытового газа: что делать до, во время и после</h1>
+      <p class="subtitle">
+        Карточка риска для жильцов квартир и частных домов с газовым оборудованием.
+        Материал учебный, порядок действий сверяйте с официальными источниками.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section aria-labelledby="about-h">
+      <h2 id="about-h">О риске и для кого он важен</h2>
+      <p>
+        Бытовой газ (метан в сетях, сжиженный газ в баллонах) не имеет цвета и запаха;
+        запах придаёт специальная добавка — одорант. Утечка опасна двумя сценариями:
+        <strong>взрыв</strong> при накоплении газа в замкнутом помещении и
+        <strong>отравление</strong> продуктами неполного сгорания (угарный газ) при
+        неисправной вентиляции или оборудовании.
+      </p>
+      <p>
+        Риск существенен для жильцов газифицированных домов, особенно там, где
+        установлены газовые плиты, колонки, котлы, а также для арендаторов, которые
+        не знают состояния оборудования.
+      </p>
+      <p>
+        <span class="tag">Аудитория: жильцы</span>
+        <span class="tag">Аудитория: арендаторы</span>
+        <span class="tag edu">Данные учебные</span>
+      </p>
+    </section>
+
+    <section aria-labelledby="signs-h">
+      <h2 id="signs-h">Признаки и условия, при которых риск повышается</h2>
+      <p>
+        Это не диагноз и не замена прибору контроля. Перечислены только наблюдаемые
+        признаки, которые должны насторожить:
+      </p>
+      <ul>
+        <li>запах, похожий на «тухлую» отдушку или газ, в помещении или у входа;</li>
+        <li>свист, шипение у газовой трубы, крана, шланга или баллона;</li>
+        <li>пожелтевшее или оранжевое пламя вместо голубого, копоть на посуде;</li>
+        <li>вялость, головная боль, тошнота в помещении с работающим газовым прибором;</li>
+        <li>слабый или обратный «тяга» в вентиляционном канале (проверяется листом бумаги у решётки);</li>
+        <li>самостоятельная установка или перенос газового оборудования, ремонт без специалиста.</li>
+      </ul>
+      <p class="callout">
+        Если вы чувствуете запах газа — не ищите причину самостоятельно. Действуйте по
+        разделу «Во время» ниже и при необходимости вызывайте службу.
+      </p>
+    </section>
+
+    <section aria-labelledby="actions-h">
+      <h2 id="actions-h">Чек-лист действий</h2>
+      <p>
+        Отметьте пункты, которые вы уже знаете или выполнили. Прогресс сохраняется
+        только в вашем браузере, персональные данные не записываются.
+      </p>
+
+      <div class="filter-bar" role="group" aria-label="Фильтр по этапу события">
+        <button type="button" data-filter="all" aria-pressed="true">Все этапы</button>
+        <button type="button" data-filter="before" aria-pressed="false">До</button>
+        <button type="button" data-filter="during" aria-pressed="false">Во время</button>
+        <button type="button" data-filter="after" aria-pressed="false">После</button>
+      </div>
+
+      <div class="progress-line">
+        <span id="progress-text">Выполнено: 0 из 0</span>
+        <progress id="progress-bar" value="0" max="1" aria-hidden="true"></progress>
+        <button type="button" class="reset-btn" id="reset-btn">Сбросить</button>
+      </div>
+
+      <ul class="checklist" id="checklist">
+        <li data-stage="before">
+          <input type="checkbox" id="b1">
+          <label for="b1"><span class="stage-badge" data-stage="before">До</span>Знать, где находится газовый кран/вентиль и как перекрыть подачу.</label>
+        </li>
+        <li data-stage="before">
+          <input type="checkbox" id="b2">
+          <label for="b2"><span class="stage-badge" data-stage="before">До</span>Держать вентиляционные каналы открытыми, не закрывать решётку.</label>
+        </li>
+        <li data-stage="before">
+          <input type="checkbox" id="b3">
+          <label for="b3"><span class="stage-badge" data-stage="before">До</span>Проверять тягу в вентиляции перед включением колонки или котла.</label>
+        </li>
+        <li data-stage="before">
+          <input type="checkbox" id="b4">
+          <label for="b4"><span class="stage-badge" data-stage="before">До</span>Хранить номер аварийной газовой службы в заметках телефона.</label>
+        </li>
+
+        <li data-stage="during">
+          <input type="checkbox" id="d1">
+          <label for="d1"><span class="stage-badge" data-stage="during">Во время</span>Перекрыть газовый кран, если это можно сделать без риска.</label>
+        </li>
+        <li data-stage="during">
+          <input type="checkbox" id="d2">
+          <label for="d2"><span class="stage-badge" data-stage="during">Во время</span>Открыть окна и двери для проветривания.</label>
+        </li>
+        <li data-stage="during">
+          <input type="checkbox" id="d3">
+          <label for="d3"><span class="stage-badge" data-stage="during">Во время</span>Не включать и не выключать свет, не пользоваться электроприборами и звонком.</label>
+        </li>
+        <li data-stage="during">
+          <input type="checkbox" id="d4">
+          <label for="d4"><span class="stage-badge" data-stage="during">Во время</span>Выйти из помещения, предупредить соседей, вызвать службу с улицы.</label>
+        </li>
+
+        <li data-stage="after">
+          <input type="checkbox" id="a1">
+          <label for="a1"><span class="stage-badge" data-stage="after">После</span>Не возвращаться в помещение до разрешения специалиста.</label>
+        </li>
+        <li data-stage="after">
+          <input type="checkbox" id="a2">
+          <label for="a2"><span class="stage-badge" data-stage="after">После</span>Обратиться к врачу при симптомах отравления (головная боль, тошнота, слабость).</label>
+        </li>
+        <li data-stage="after">
+          <input type="checkbox" id="a3">
+          <label for="a3"><span class="stage-badge" data-stage="after">После</span>Проверить оборудование с газовой службой перед повторным использованием.</label>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="service-h">
+      <h2 id="service-h">Когда обращаться к официальной службе</h2>
+      <p>Обращайтесь в аварийную газовую службу или по единому номеру экстренных служб, если:</p>
+      <ul>
+        <li>вы чувствуете устойчивый запах газа;</li>
+        <li>слышите шипение или свист у оборудования или трубы;</li>
+        <li>у вас или у других людей в помещении появились симптомы отравления;</li>
+        <li>оборудование повреждено, неисправно или установлено без специалиста.</li>
+      </ul>
+      <div class="callout">
+        <strong>Учебные номера — сверьте перед использованием:</strong><br>
+        Аварийная газовая служба: <strong>04</strong> (со стационарного) / <strong>104</strong> (с мобильного).<br>
+        Единый номер экстренных служб: <strong>112</strong>.
+      </div>
+      <p class="checked-date">Дата проверки контактов: укажите при сдаче (например, 2026-09-16).</p>
+    </section>
+
+    <section aria-labelledby="sources-h">
+      <h2 id="sources-h">Первичные источники</h2>
+      <ul class="sources">
+        <li>
+          МЧС России. Памятка о правилах безопасности при эксплуатации газового оборудования.
+          <a href="https://www.mchs.gov.ru/" target="_blank" rel="noopener noreferrer">mchs.gov.ru</a>
+          — <span class="checked-date">дата проверки: укажите</span>
+        </li>
+        <li>
+          Роспотребнадзор. Материалы по качеству воздуха и отравлениям продуктами горения.
+          <a href="https://www.rospotrebnadzor.ru/" target="_blank" rel="noopener noreferrer">rospotrebnadzor.ru</a>
+          — <span class="checked-date">дата проверки: укажите</span>
+        </li>
+        <li>
+          ВОЗ (WHO). Indoor air quality: household fuel combustion.
+          <a href="https://www.who.int/" target="_blank" rel="noopener noreferrer">who.int</a>
+          — <span class="checked-date">дата проверки: укажите</span>
+        </li>
+        <li>
+          Производитель/поставщик газа вашего региона. Правила пользования газом в быту.
+          <span class="checked-date">— добавьте прямую ссылку и дату проверки</span>
+        </li>
+      </ul>
+      <p class="callout ok">
+        <strong>Отметка об учебных данных:</strong> формулировки действий, фильтр и чек-лист
+        на этой странице — учебный материал. Нормативные значения, телефоны и порядок
+        действий обязательно сверяйте с официальными источниками перед использованием.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="page-foot">
+    Учебный проект. Страница не является официальной инструкцией.
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var STORAGE_KEY = "gas-risk-checklist-v1";
+      var list = document.getElementById("checklist");
+      var checkboxes = Array.prototype.slice.call(
+        list.querySelectorAll('input[type="checkbox"]')
+      );
+      var filterButtons = Array.prototype.slice.call(
+        document.querySelectorAll(".filter-bar button")
+      );
+      var progressText = document.getElementById("progress-text");
+      var progressBar = document.getElementById("progress-bar");
+      var resetBtn = document.getElementById("reset-btn");
+
+      // Безопасное чтение из localStorage (может быть недоступно)
+      function loadState() {
+        try {
+          var raw = window.localStorage.getItem(STORAGE_KEY);
+          if (!raw) return {};
+          var parsed = JSON.parse(raw);
+          return (parsed && typeof parsed === "object") ? parsed : {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveState() {
+        var state = {};
+        checkboxes.forEach(function (cb) { state[cb.id] = cb.checked; });
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          /* хранилище недоступно — молча игнорируем */
+        }
+      }
+
+      function updateProgress() {
+        var visible = checkboxes.filter(function (cb) {
+          var item = cb.closest("li");
+          return item && !item.hidden;
+        });
+        var done = visible.filter(function (cb) { return cb.checked; }).length;
+        var total = visible.length;
+        progressText.textContent = "Выполнено: " + done + " из " + total;
+        progressBar.max = total || 1;
+        progressBar.value = done;
+      }
+
+      function applyFilter(stage) {
+        list.querySelectorAll("li").forEach(function (item) {
+          var show = (stage === "all") || (item.dataset.stage === stage);
+          item.hidden = !show;
+        });
+        filterButtons.forEach(function (btn) {
+          var pressed = btn.dataset.filter === stage;
+          btn.setAttribute("aria-pressed", pressed ? "true" : "false");
+        });
+        updateProgress();
+      }
+
+      // Восстановление состояния
+      var saved = loadState();
+      checkboxes.forEach(function (cb) {
+        if (Object.prototype.hasOwnProperty.call(saved, cb.id)) {
+          cb.checked = Boolean(saved[cb.id]);
+        }
+      });
+
+      checkboxes.forEach(function (cb) {
+        cb.addEventListener("change", function () {
+          saveState();
+          updateProgress();
+        });
+      });
+
+      filterButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyFilter(btn.dataset.filter);
+        });
+      });
+
+      resetBtn.addEventListener("click", function () {
+        checkboxes.forEach(function (cb) { cb.checked = false; });
+        saveState();
+        updateProgress();
+      });
+
+      applyFilter("all");
+    })();
+  </script>
+
+</body>
+</html>

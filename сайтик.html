@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Учебная карточка риска: задымление. Признаки, действия до/во время/после, когда обращаться в службу, первичные источники.">
+<title>Карточка риска: Задымление — памятка действий</title>
+
+<style>
+    :root {
+        --bg: #0f1115;
+        --bg-soft: #161922;
+        --card: #1c2029;
+        --card-2: #232834;
+        --text: #eef1f6;
+        --muted: #a0a8b8;
+        --accent: #ff6b35;
+        --accent-2: #ffb703;
+        --danger: #ef4444;
+        --ok: #22c55e;
+        --border: #2c3240;
+        --focus: #ffb703;
+        --radius: 14px;
+        --shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background:
+            radial-gradient(1200px 600px at 20% -10%, rgba(255,107,53,.15), transparent 60%),
+            radial-gradient(900px 500px at 100% 0%, rgba(255,183,3,.08), transparent 55%),
+            var(--bg);
+        min-height: 100vh;
+    }
+
+    /* ===== Шапка ===== */
+    .hero {
+        position: relative;
+        padding: 3rem 1rem 2.5rem;
+        background: linear-gradient(180deg, rgba(255,107,53,.10), transparent);
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto -10% -60% -10%;
+        height: 140px;
+        background: radial-gradient(closest-side, rgba(255,107,53,.25), transparent);
+        filter: blur(30px);
+        pointer-events: none;
+    }
+
+    .hero-inner {
+        max-width: 880px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        font-size: .78rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+        background: rgba(255,183,3,.10);
+        border: 1px solid rgba(255,183,3,.30);
+        padding: .25rem .6rem;
+        border-radius: 999px;
+        margin-bottom: 1rem;
+    }
+
+    .badge .dot {
+        width: .5rem; height: .5rem; border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(255,107,53,.20);
+    }
+
+    h1 {
+        font-size: clamp(1.7rem, 5vw, 2.6rem);
+        line-height: 1.15;
+        margin: 0 0 .6rem;
+        letter-spacing: -0.01em;
+    }
+
+    h1 .accent {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .subtitle {
+        color: var(--muted);
+        max-width: 60ch;
+        margin: 0;
+        font-size: 1.02rem;
+    }
+
+    /* ===== Контент ===== */
+    main {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 2rem 1rem 4rem;
+        display: grid;
+        gap: 1.1rem;
+    }
+
+    section {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.4rem 1.4rem 1.5rem;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+    }
+
+    section::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), transparent);
+        opacity: .7;
+    }
+
+    section.alt::before {
+        background: linear-gradient(90deg, var(--accent-2), transparent);
+    }
+
+    section.ok::before {
+        background: linear-gradient(90deg, var(--ok), transparent);
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        margin: 0 0 .8rem;
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+    }
+
+    h2 .icon {
+        width: 1.6rem;
+        height: 1.6rem;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 8px;
+        background: rgba(255,107,53,.12);
+        color: var(--accent);
+        font-size: .95rem;
+        flex: 0 0 auto;
+    }
+
+    h2 .icon.gold { background: rgba(255,183,3,.12); color: var(--accent-2); }
+    h2 .icon.green { background: rgba(34,197,94,.12); color: var(--ok); }
+
+    p, li { font-size: 1rem; }
+
+    ul { padding-left: 1.2rem; margin: .3rem 0 .6rem; }
+    li { margin-bottom: .35rem; }
+
+    strong { color: #fff; }
+
+    /* Callout */
+    .callout {
+        background: linear-gradient(180deg, rgba(255,107,53,.10), rgba(255,107,53,.04));
+        border: 1px solid rgba(255,107,53,.35);
+        border-left: 4px solid var(--accent);
+        padding: .8rem 1rem;
+        border-radius: 10px;
+        margin: 1rem 0 0;
+        font-size: .96rem;
+    }
+
+    .callout.gold {
+        background: linear-gradient(180deg, rgba(255,183,3,.10), rgba(255,183,3,.04));
+        border-color: rgba(255,183,3,.35);
+        border-left-color: var(--accent-2);
+    }
+
+    .callout.green {
+        background: linear-gradient(180deg, rgba(34,197,94,.10), rgba(34,197,94,.04));
+        border-color: rgba(34,197,94,.35);
+        border-left-color: var(--ok);
+    }
+
+    /* ===== Фильтр ===== */
+    .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+        margin-bottom: 1rem;
+    }
+
+    .filter-bar button {
+        font: inherit;
+        font-size: .9rem;
+        padding: .45rem .9rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card-2);
+        color: var(--text);
+        cursor: pointer;
+        transition: background .15s ease, border-color .15s ease, transform .05s ease;
+    }
+
+    .filter-bar button:hover {
+        border-color: var(--accent);
+    }
+
+    .filter-bar button:active { transform: translateY(1px); }
+
+    .filter-bar button[aria-pressed="true"] {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        border-color: transparent;
+        color: #1a1206;
+        font-weight: 600;
+    }
+
+    /* ===== Прогресс ===== */
+    .progress-line {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+        margin-bottom: 1rem;
+        font-size: .92rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+    }
+
+    .progress-line #progress-text { min-width: 10ch; }
+
+    progress {
+        flex: 1 1 140px;
+        height: .65rem;
+        border: none;
+        border-radius: 999px;
+        overflow: hidden;
+        background: var(--card-2);
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    progress::-webkit-progress-bar { background: var(--card-2); border-radius: 999px; }
+    progress::-webkit-progress-value {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        border-radius: 999px;
+        transition: width .25s ease;
+    }
+    progress::-moz-progress-bar {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        border-radius: 999px;
+    }
+
+    .reset-btn {
+        font: inherit;
+        font-size: .85rem;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: .3rem .7rem;
+        cursor: pointer;
+        color: var(--muted);
+        transition: color .15s ease, border-color .15s ease;
+    }
+
+    .reset-btn:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ===== Чек-лист ===== */
+    .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: .55rem; }
+
+    .checklist li {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: .7rem .8rem;
+        display: flex;
+        gap: .7rem;
+        align-items: flex-start;
+        background: var(--card-2);
+        transition: border-color .15s ease, background .15s ease, transform .05s ease;
+    }
+
+    .checklist li:hover { border-color: #3a4152; }
+
+    .checklist li[hidden] { display: none; }
+
+    .checklist input[type="checkbox"] {
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-top: .2rem;
+        flex: 0 0 auto;
+        accent-color: var(--accent);
+        cursor: pointer;
+    }
+
+    .checklist label { cursor: pointer; flex: 1; font-size: .97rem; }
+
+    .checklist input:checked + label {
+        text-decoration: line-through;
+        color: var(--muted);
+    }
+
+    .checklist input:checked + label .stage-badge { opacity: .6; }
+
+    .stage-badge {
+        display: inline-block;
+        font-size: .7rem;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        padding: .12rem .5rem;
+        border-radius: 6px;
+        margin-right: .5rem;
+        vertical-align: .08em;
+        font-weight: 600;
+    }
+
+    .stage-badge[data-stage="before"] {
+        background: rgba(59,130,246,.15);
+        color: #93c5fd;
+        border: 1px solid rgba(59,130,246,.35);
+    }
+    .stage-badge[data-stage="during"] {
+        background: rgba(255,107,53,.15);
+        color: #fdba8c;
+        border: 1px solid rgba(255,107,53,.40);
+    }
+    .stage-badge[data-stage="after"] {
+        background: rgba(34,197,94,.15);
+        color: #86efac;
+        border: 1px solid rgba(34,197,94,.35);
+    }
+
+    /* ===== Источники ===== */
+    .sources { list-style: none; padding: 0; margin: 0; display: grid; gap: .6rem; }
+
+    .sources li {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: .7rem .9rem;
+        background: var(--card-2);
+        font-size: .95rem;
+    }
+
+    .sources a {
+        color: var(--accent-2);
+        text-decoration: none;
+        border-bottom: 1px dashed rgba(255,183,3,.5);
+    }
+
+    .sources a:hover { color: #fff; border-bottom-color: #fff; }
+
+    .checked-date {
+        color: var(--muted);
+        font-size: .85rem;
+        white-space: nowrap;
+    }
+
+    /* ===== Фокус ===== */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    label:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 3px;
+        border-radius: 6px;
+    }
+
+    /* ===== Подвал ===== */
+    .page-foot {
+        text-align: center;
+        color: var(--muted);
+        font-size: .85rem;
+        padding: 1.5rem 1rem 2.5rem;
+        border-top: 1px solid var(--border);
+        background: var(--bg-soft);
+    }
+
+    /* ===== Адаптив ===== */
+    @media (max-width: 520px) {
+        .hero { padding: 2rem 1rem 1.8rem; }
+        section { padding: 1.1rem 1rem 1.2rem; }
+        h2 { font-size: 1.12rem; }
+        .filter-bar button { font-size: .85rem; padding: .4rem .75rem; }
+        .checklist li { padding: .6rem .65rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; scroll-behavior: auto !important; }
+    }
+</style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-inner">
+        <span class="badge"><span class="dot" aria-hidden="true"></span>Практическая работа · Техносферный риск</span>
+        <h1>Карточка риска: <span class="accent">Задымление</span></h1>
+        <p class="subtitle">
+            Учебная памятка действий для жильцов и работников. Порядок действий
+            сверяйте с официальными инструкциями и региональными службами.
+        </p>
+    </div>
+</header>
+
+<main>
+
+    <section aria-labelledby="h-description">
+        <h2 id="h-description"><span class="icon" aria-hidden="true">🔥</span>Описание риска и для кого он важен</h2>
+        <p>
+            Задымление — присутствие дыма в воздухе. Оно снижает видимость, затрудняет
+            дыхание и может привести к отравлению продуктами горения (в первую очередь
+            угарным газом). Риск особенно существенен для людей вблизи очага возгорания,
+            для жильцов многоквартирных домов, а также для работников производств
+            с горючими материалами.
+        </p>
+        <p class="callout gold">
+            <strong>Коротко:</strong> дым опасен не только огнём, но и токсичными
+            продуктами горения. Основная защита — быстрая эвакуация и защита дыхания.
+        </p>
+    </section>
+
+    <section class="alt" aria-labelledby="h-factors">
+        <h2 id="h-factors"><span class="icon gold" aria-hidden="true">⚠️</span>Признаки и условия возникновения</h2>
+        <p>Это наблюдаемые признаки, а не диагноз. Они должны насторожить:</p>
+        <ul>
+            <li>запах гари или жжёной изоляции;</li>
+            <li>видимый дым в воздухе, из окон, дверей, вентиляции;</li>
+            <li>срабатывание пожарной сигнализации;</li>
+            <li>повышение температуры в помещении;</li>
+            <li>потемнение стен у розеток, оплавление проводов.</li>
+        </ul>
+        <p>Условия, повышающие риск:</p>
+        <ul>
+            <li>несоблюдение правил пожарной безопасности;</li>
+            <li>неисправная электропроводка или оборудование;</li>
+            <li>хранение легковоспламеняющихся материалов рядом с источниками тепла;</li>
+            <li>природные пожары (лесные, торфяные) вблизи населённого пункта.</li>
+        </ul>
+    </section>
+
+    <section aria-labelledby="h-actions">
+        <h2 id="h-actions"><span class="icon" aria-hidden="true">✅</span>Действия: до, во время, после</h2>
+        <p>
+            Отметьте пункты, которые вы уже знаете или выполнили. Прогресс сохраняется
+            только в вашем браузере, персональные данные не записываются.
+        </p>
+
+        <div class="filter-bar" role="group" aria-label="Фильтр по этапу события">
+            <button type="button" data-filter="all" aria-pressed="true">Все этапы</button>
+            <button type="button" data-filter="before" aria-pressed="false">До</button>
+            <button type="button" data-filter="during" aria-pressed="false">Во время</button>
+            <button type="button" data-filter="after" aria-pressed="false">После</button>
+        </div>
+
+        <div class="progress-line">
+            <span id="progress-text" aria-live="polite">Выполнено: 0 из 0</span>
+            <progress id="progress-bar" value="0" max="1" aria-hidden="true"></progress>
+            <button type="button" class="reset-btn" id="reset-btn">Сбросить</button>
+        </div>
+
+        <ul class="checklist" id="checklist">
+            <li data-stage="before">
+                <input type="checkbox" id="b1">
+                <label for="b1"><span class="stage-badge" data-stage="before">До</span>Изучить план эвакуации и пути выхода.</label>
+            </li>
+            <li data-stage="before">
+                <input type="checkbox" id="b2">
+                <label for="b2"><span class="stage-badge" data-stage="before">До</span>Проверить работоспособность пожарной сигнализации.</label>
+            </li>
+            <li data-stage="before">
+                <input type="checkbox" id="b3">
+                <label for="b3"><span class="stage-badge" data-stage="before">До</span>Убедиться в наличии и исправности огнетушителя.</label>
+            </li>
+            <li data-stage="before">
+                <input type="checkbox" id="b4">
+                <label for="b4"><span class="stage-badge" data-stage="before">До</span>Не хранить легковоспламеняющиеся материалы у источников тепла.</label>
+            </li>
+
+            <li data-stage="during">
+                <input type="checkbox" id="d1">
+                <label for="d1"><span class="stage-badge" data-stage="during">Во время</span>Сохранять спокойствие и не создавать панику.</label>
+            </li>
+            <li data-stage="during">
+                <input type="checkbox" id="d2">
+                <label for="d2"><span class="stage-badge" data-stage="during">Во время</span>Дышать через влажную ткань, двигаться пригнувшись или ползком.</label>
+            </li>
+            <li data-stage="during">
+                <input type="checkbox" id="d3">
+                <label for="d3"><span class="stage-badge" data-stage="during">Во время</span>Не пользоваться лифтом, спускаться по лестнице.</label>
+            </li>
+            <li data-stage="during">
+                <input type="checkbox" id="d4">
+                <label for="d4"><span class="stage-badge" data-stage="during">Во время</span>Если эвакуация невозможна — закрыть двери, заткнуть щели влажной тканью, сигнализировать из окна.</label>
+            </li>
+
+            <li data-stage="after">
+                <input type="checkbox" id="a1">
+                <label for="a1"><span class="stage-badge" data-stage="after">После</span>Следовать указаниям спасательных служб.</label>
+            </li>
+            <li data-stage="after">
+                <input type="checkbox" id="a2">
+                <label for="a2"><span class="stage-badge" data-stage="after">После</span>Не возвращаться в помещение до официального разрешения.</label>
+            </li>
+            <li data-stage="after">
+                <input type="checkbox" id="a3">
+                <label for="a3"><span class="stage-badge" data-stage="after">После</span>Обратиться за медицинской помощью при симптомах отравления.</label>
+            </li>
+        </ul>
+    </section>
+
+    <section class="ok" aria-labelledby="h-help">
+        <h2 id="h-help"><span class="icon green" aria-hidden="true">📞</span>Когда обращаться в официальную службу</h2>
+        <p>
+            Немедленно звоните в экстренные службы при обнаружении дыма, огня,
+            запаха гари или срабатывании сигнализации:
+        </p>
+        <ul>
+            <li>пожарная охрана — <strong>101</strong> (с мобильного);</li>
+            <li>единый номер экстренных служб — <strong>112</strong>.</li>
+        </ul>
+        <p class="callout">
+            Номера приведены как справочные для учебного материала. Перед
+            использованием сверьте их с официальным сайтом МЧС России или
+            региональной службой.
+        </p>
+    </section>
+
+    <section class="alt" aria-labelledby="h-sources">
+        <h2 id="h-sources"><span class="icon gold" aria-hidden="true">🔗</span>Первичные источники</h2>
+        <ul class="sources">
+            <li>
+                МЧС России. Официальный портал — раздел профилактики и нормативных документов.<br>
+                <a href="https://www.mchs.gov.ru/dejatelnost/prevention/normativnye-dokumenty"
+                   target="_blank" rel="noopener noreferrer">mchs.gov.ru</a>
+                <span class="checked-date">· дата проверки: 16.09.2026</span>
+            </li>
+            <li>
+                Постановление Правительства РФ № 1479 «Об утверждении Правил противопожарного режима в Российской Федерации».<br>
+                <a href="http://publication.pravo.gov.ru/Document/View/0001202009140033"
+                   target="_blank" rel="noopener noreferrer">publication.pravo.gov.ru</a>
+                <span class="checked-date">· дата проверки: 16.09.2026</span>
+            </li>
+            <li>
+                ВОЗ (WHO). Материалы по качеству воздуха и продуктам горения.<br>
+                <a href="https://www.who.int/teams/environment-climate-change-and-health/air-quality-and-health"
+                   target="_blank" rel="noopener noreferrer">who.int</a>
+                <span class="checked-date">· дата проверки: 16.09.2026</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="ok" aria-labelledby="h-edu">
+        <h2 id="h-edu"><span class="icon green" aria-hidden="true">🎓</span>Какие данные являются учебными</h2>
+        <ul>
+            <li>Формулировки действий и чек-лист — учебные, не заменяют официальную инструкцию.</li>
+            <li>Номера 101 и 112 приведены как справочные — сверьте с региональной службой.</li>
+            <li>Даты проверки источников указаны на момент подготовки материала.</li>
+        </ul>
+        <p class="callout green">
+            Расчётных значений (концентраций, доз, порогов) на странице нет —
+            материал носит описательный характер.
+        </p>
+    </section>
+
+</main>
+
+<footer class="page-foot">
+    <p>© 2026 Учебный проект. Страница не является официальной инструкцией.</p>
+</footer>
+
+<script>
+(function () {
+    "use strict";
+
+    var STORAGE_KEY = "smoke-risk-checklist-v1";
+
+    var list = document.getElementById("checklist");
+    if (!list) return;
+
+    var checkboxes = Array.prototype.slice.call(
+        list.querySelectorAll('input[type="checkbox"]')
+    );
+    var filterButtons = Array.prototype.slice.call(
+        document.querySelectorAll(".filter-bar button")
+    );
+    var progressText = document.getElementById("progress-text");
+    var progressBar = document.getElementById("progress-bar");
+    var resetBtn = document.getElementById("reset-btn");
+
+    if (checkboxes.length === 0) return;
+
+    function loadState() {
+        try {
+            var raw = window.localStorage.getItem(STORAGE_KEY);
+            if (!raw) return {};
+            var parsed = JSON.parse(raw);
+            return (parsed && typeof parsed === "object") ? parsed : {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function saveState() {
+        var state = {};
+        checkboxes.forEach(function (cb) { state[cb.id] = cb.checked; });
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+            /* хранилище недоступно — игнорируем */
+        }
+    }
+
+    function updateProgress() {
+        var visible = checkboxes.filter(function (cb) {
+            var item = cb.closest("li");
+            return item && !item.hidden;
+        });
+        var done = visible.filter(function (cb) { return cb.checked; }).length;
+        var total = visible.length;
+        progressText.textContent = "Выполнено: " + done + " из " + total;
+        progressBar.max = total || 1;
+        progressBar.value = done;
+    }
+
+    function applyFilter(stage) {
+        list.querySelectorAll("li").forEach(function (item) {
+            var show = (stage === "all") || (item.dataset.stage === stage);
+            item.hidden = !show;
+        });
+        filterButtons.forEach(function (btn) {
+            var pressed = btn.dataset.filter === stage;
+            btn.setAttribute("aria-pressed", pressed ? "true" : "false");
+        });
+        updateProgress();
+    }
+
+    // Восстановление состояния
+    var saved = loadState();
+    checkboxes.forEach(function (cb) {
+        if (Object.prototype.hasOwnProperty.call(saved, cb.id)) {
+            cb.checked = Boolean(saved[cb.id]);
+        }
+    });
+
+    checkboxes.forEach(function (cb) {
+        cb.addEventListener("change", function () {
+            saveState();
+            updateProgress();
+        });
+    });
+
+    filterButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            applyFilter(btn.dataset.filter);
+        });
+    });
+
+    if (resetBtn) {
+        resetBtn.addEventListener("click", function () {
+            checkboxes.forEach(function (cb) { cb.checked = false; });
+            saveState();
+            updateProgress();
+        });
+    }
+
+    applyFilter("all");
+})();
+</script>
+
+</body>
+</html>
+
